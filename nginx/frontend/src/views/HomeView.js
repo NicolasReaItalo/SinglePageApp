@@ -8,6 +8,7 @@ export default class extends AbstractView{
 
 	async getHtml(){
 		return `<h1>Welcome Home</h1>
-				<p>The url is ${location.pathname } </p>`;
+				<p>The url is ${location.pathname } </p>`
+				;
 	}
 }

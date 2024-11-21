@@ -7,8 +7,14 @@ export default class extends AbstractView{
 	}
 
 	async getHtml(){
+		let pm = '';
+		for (const key in this.params){
+			pm += String(key) + " : " + this.params[key] + "<br>";
+		}
 		return `<h1>Welcome to the first view</h1>
-		<a href="/view1/1/2/3" class="nav__link" data-link>test params</a>
-				<p>The url is ${location.pathname } </p>`;
+				<p>The url is ${location.pathname } </p>
+				params<br> ${pm} </p>
+
+				`;
 	}
 }

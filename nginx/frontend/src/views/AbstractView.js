@@ -1,7 +1,6 @@
 export default class {
 	constructor(params){
 		this.params = params;
-		console.log("params", params);
 	}
 
 
@@ -13,8 +12,10 @@ export default class {
 		return "";
 	}
 
-	/*
-	ajouter gestion des EventHandler et le destructeur
-	gestion des parametres
-	*/
+
+	onDestroy(){
+		/*
+		ajouter gestion des EventHandler dans le destructeur
+		*/
+	}  // pour le nettoyage
 }
