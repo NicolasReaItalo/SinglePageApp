@@ -18,15 +18,14 @@ services:
           - backend
     container_name: nginx
     build:
-      context: ./nginx
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./nginx/Dockerfile
     networks:
       - app_network
     ports:
       - "5000:5000"
     restart: unless-stopped
     init: true
-
 
 networks:
   app_network:

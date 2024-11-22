@@ -1,0 +1,8 @@
+services:
+  test-runner:
+    image: frontend-tests
+    container_name: frontend-tests
+    build:
+      context: .
+      dockerfile: frontend-tests/Dockerfile
+

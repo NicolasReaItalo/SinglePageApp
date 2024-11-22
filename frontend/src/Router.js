@@ -1,4 +1,4 @@
-import NotFoundView from "./views/NotFoundView.js";
+import DefaultView from "./views/ErrorView.js";
 
 
 export default class{
@@ -8,12 +8,7 @@ export default class{
 
 	constructor(){
 		this.addRoute.bind(this);
-		this.matchRoute.bind(this);
-	}
-
-	//Public methods
-	async route(){
-
+		this._matchRoute.bind(this);
 	}
 
 	setListeners() {
@@ -23,7 +18,6 @@ export default class{
 			document.body.addEventListener("click", this._handleLinkClick);
 		});
 	}
-
 
 	//Private helper methods
 	_handleLinkClick (event){
@@ -43,13 +37,24 @@ export default class{
 	addRoute (schema, view){
 		if (typeof schema !== "string" || schema[0] !== "/")
 			throw new Error("Router: addRoute: Invalid route schema");
+		if (schema === "/"){
+			this.#routes.push(
+			{
+				params: [],
+				schema: "/",
+				split_length : 1,
+				view: view,
+				regex : new RegExp('^\/$')
+			});
+		}
+
 		const newroute = {}
 		newroute.params = []; // stocke les parametres dynamiques
 		newroute.schema = schema;  // schema de l'uri
 		newroute.view = view; // reference vers la classe view a appeler si la route matche
 
-		//creation de la regex
 		const split = schema.split(/\//).filter((str)=> str.length > 0);
+		newroute.split_length = split.length;
 		//checker qu'il n'y a pas de parametres dynamiques avant les params statiques et fabriquer la regex
 		let switchedToDyn = false;
 		let strregex = "";
@@ -68,13 +73,15 @@ export default class{
 			}
 		}
 		strregex += '$';
-		newroute.regex = new RegExp(strregex);
+		newroute.regex = new RegExp(strregex); // regex permettant de matcher l'uri et le schema
 		this.#routes.push(newroute);
 	}
 
-	matchRoute(url){
+	_matchRoute(url){
 		for (const route of this.#routes){
-			if ( route.regex.test(url)){
+			const url_split = url.split(/\//).filter((str)=> str.length > 0);
+			if ( route.regex.test(url) && route.split_length === url_split.length){
+				console.log("matched with :", route.schema);
 				let values = route.regex.exec(url);
 				values = values.slice(1);
 				return  new route.view(Object.fromEntries(route.params.map((key, index) => [key, values[index]])));
@@ -83,21 +90,16 @@ export default class{
 		return null;
 	}
 
-	async route(){
-		let newView = this.matchRoute(location.pathname);
-		if (newView === null)
-			newView = new NotFoundView({});
+
+	route(){
 		if (this.#currentView !== null)
 			this.#currentView.onDestroy();
+		let newView = this._matchRoute(location.pathname);
+		if (newView === null){
+			console.log("No matching route found");
+			newView = new DefaultView({});
+		}
 		this.#currentView = newView;
-		document.querySelector(".container").innerHTML = await newView.getHtml();
 	}
-
-
-
-
-
-
-
 
 }

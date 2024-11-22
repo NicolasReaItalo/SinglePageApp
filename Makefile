@@ -24,11 +24,9 @@ init:
 	@echo "🔧 Building the images..."
 	@docker compose  -f docker-compose.yml build
 
-init-dev:
-	@echo "🔧 DEV Building the images..."
-	@docker compose  -f dev.docker-compose.yml build
-
-
+tests:
+	@docker compose -f test.docker-compose.yml build
+	@docker compose  -f test.docker-compose.yml up
 
 #cree et demarre les container
 up:
