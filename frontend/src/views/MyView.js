@@ -25,7 +25,9 @@ export default class extends AbstractView {
 					<a href="/view1" data-link>Link to the first view</a><br>
 					<a href="/view1/myid" data-link>Link to the first view with dynamic parameter id</a><br>
 					<a href="/view1/myid/mypage" data-link>Link to the first view with dynamic parameters id and page </a><br>
+					<a href="/bootstrap" data-link>Alertes boostrap</a><br>
 					<a href="/view2" data-link>Link to the second view</a>
+					<a href="/form" data-link>Link to the form view</a>
 
 					`;
 		}
