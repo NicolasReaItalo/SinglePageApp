@@ -99,7 +99,7 @@ class Router {
 			this.#currentView.onDestroy();
 		let newView = this._matchRoute(location.pathname);
 		if (newView === null){
-			console.log("No matching route found");
+			console.log("Router: No matching route found");
 			newView = new DefaultView({});
 		}
 		this.#currentView = newView;
@@ -107,4 +107,4 @@ class Router {
 
 }
 
-export {Router as default}
+export default Router;

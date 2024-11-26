@@ -1,4 +1,4 @@
-export default class {
+ class AbstractView {
 	params;
 	eventListeners = [];
 	constructor(params){
@@ -33,3 +33,5 @@ export default class {
 		this.childOnDestroy();
 	}
 }
+
+export default AbstractView;

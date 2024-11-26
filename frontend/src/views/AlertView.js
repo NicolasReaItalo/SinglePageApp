@@ -1,6 +1,6 @@
 import AbstractView from "./AbstractView.js";
 
-export default class extends AbstractView {
+class AlertView extends AbstractView {
 	constructor(params){
 		super(params);
 		this._setTitle("test boostrap View");
@@ -48,3 +48,5 @@ export default class extends AbstractView {
 		}
 	}
 }
+
+export default AlertView;

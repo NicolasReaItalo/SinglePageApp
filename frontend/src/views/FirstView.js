@@ -1,6 +1,6 @@
 import AbstractView from "./AbstractView.js";
 
-export default class extends AbstractView {
+class FirstView extends AbstractView {
 	constructor(params){
 		super(params);
 		this._setTitle("FirstView");
@@ -28,3 +28,5 @@ export default class extends AbstractView {
 		}
 	}
 }
+
+export default FirstView;
