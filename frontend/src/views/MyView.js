@@ -1,12 +1,11 @@
 import AbstractView from "./AbstractView.js";
 
 class MyView extends AbstractView {
-  constructor(params) {
-    super(params);
+  constructor(params, app) {
+    super(params, app);
     this._setTitle("MyView");
     this.onStart();
   }
-
   onStart() {
     this.setHtml();
   }

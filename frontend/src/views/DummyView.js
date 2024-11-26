@@ -5,8 +5,8 @@ A View without any DOM reference to use with jest for unit testing the router
 */
 
 class DummyView extends AbstractView {
-  constructor(params) {
-    super(params);
+  constructor(params, app) {
+    super(params, app);
     this.onStart();
   }
 

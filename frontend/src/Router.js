@@ -1,19 +1,33 @@
 import DefaultView from "./views/ErrorView.js";
-
+import Application from "./Application.js";
+import AbstractView from "./views/AbstractView.js";
 class Router {
+  /**
+   * The Router class
+   * takes an Application instance as a parameter
+   * addRoute(schema) : create a route with a matching Regex
+   * route() : is called when a data-link is clicked or during a popstate() event
+   *this fucntion will match all the route and instantiate the correpsonding view
+   * @param {Application} app - a reference to the main app
+   */
   static _instance;
   #routes = [];
   #currentView = null;
+  #app = null;
 
-  constructor() {
+  constructor(app) {
     if (Router._instance) {
       throw new Error(
         "Router Singleton classes can't be instantiated more than once."
       );
     }
+    if (app === undefined) {
+      throw new Error("App reference not passed to constructor");
+    }
     Router._instance = this;
     this.addRoute.bind(this);
     this._matchRoute.bind(this);
+    this.#app = app;
   }
 
   setListeners() {
@@ -24,21 +38,21 @@ class Router {
     });
   }
 
-  //Private helper methods
   _handleLinkClick(event) {
     if (event.target.matches("[data-link]")) {
       event.preventDefault();
-      this.#_navigateTo(event.target.href);
+      history.pushState(null, null, event.target.href);
+      this.route();
     }
   }
 
-  #_navigateTo = (url) => {
-    history.pushState(null, null, url);
-    this.route();
-  };
-
   /* Add a route to the router '/location/.../:dynamicparam1/:dynamicparam2' */
   addRoute(schema, view) {
+    /**
+     *Adds a route to the router
+     * @param {String} schema -the route schema
+     * @param {AbstractView} view -the view to instantiate
+     */
     if (typeof schema !== "string" || schema[0] !== "/")
       throw new Error("Router: addRoute: Invalid route schema");
     if (schema === "/") {
@@ -88,7 +102,8 @@ class Router {
         return new route.view(
           Object.fromEntries(
             route.params.map((key, index) => [key, values[index]])
-          )
+          ),
+          this.#app
         );
       }
     }

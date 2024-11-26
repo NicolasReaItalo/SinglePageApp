@@ -1,8 +1,18 @@
+import Application from "../Application.js";
 class AbstractView {
+  /**
+   * abstract class used to create View classes intancied by
+   * Router()
+   * @param {Object} params - an object {} containing all the dynamic parameters
+   * 			passed by the url
+   * @param {Application} app - a reference to the main app
+   */
   params;
   eventListeners = [];
-  constructor(params) {
+  app;
+  constructor(params, app) {
     this.params = params;
+    this.app = app;
   }
 
   _setTitle(title) {

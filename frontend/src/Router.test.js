@@ -1,7 +1,8 @@
 import Router from "./Router";
 import DummyView from "./views/DummyView.js";
+import Application from "./Application.js";
 
-const r = new Router();
+const r = new Router(new Application());
 test("Test Router : matching route", () => {
   r.addRoute("/hello", DummyView);
   expect(r._matchRoute("/hello")).not.toBe(null);

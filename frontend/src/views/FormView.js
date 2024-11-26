@@ -1,8 +1,8 @@
 import AbstractView from "./AbstractView.js";
 
 class FormView extends AbstractView {
-  constructor(params) {
-    super(params);
+  constructor(params, app) {
+    super(params, app);
     this._setTitle("test boostrap View");
     this.onStart();
   }
@@ -11,7 +11,6 @@ class FormView extends AbstractView {
     this.setHtml();
     const switch_button = document.querySelector(".toggle-theme");
     this.addEventListener(switch_button, "click", this.toggleMode);
-    // switch_button.addEventListener('click', this.toggleMode);
   }
 
   toggleMode(e) {

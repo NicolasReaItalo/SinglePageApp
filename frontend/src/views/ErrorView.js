@@ -1,8 +1,8 @@
 import AbstractView from "./AbstractView.js";
 
 class ErrorView extends AbstractView {
-  constructor(params) {
-    super(params);
+  constructor(params, app) {
+    super(params, app);
     this._setTitle("DefaultView");
     this.onStart();
   }
