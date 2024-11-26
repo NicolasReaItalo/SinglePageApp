@@ -84,7 +84,6 @@ class Router {
 		for (const route of this.#routes){
 			const url_split = url.split(/\//).filter((str)=> str.length > 0);
 			if ( route.regex.test(url) && route.split_length === url_split.length){
-				console.log("matched with :", route.schema);
 				let values = route.regex.exec(url);
 				values = values.slice(1);
 				return  new route.view(Object.fromEntries(route.params.map((key, index) => [key, values[index]])));
@@ -99,7 +98,6 @@ class Router {
 			this.#currentView.onDestroy();
 		let newView = this._matchRoute(location.pathname);
 		if (newView === null){
-			console.log("Router: No matching route found");
 			newView = new DefaultView({});
 		}
 		this.#currentView = newView;

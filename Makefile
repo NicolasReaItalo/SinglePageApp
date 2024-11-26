@@ -24,9 +24,9 @@ init:
 	@echo "🔧 Building the images..."
 	@docker compose  -f docker-compose.yml build
 
-tests:
-	@docker compose -f test.docker-compose.yml build
-	@docker compose  -f test.docker-compose.yml up
+test-front:
+	@cd ./frontend && npm i && npm test
+	# @rm -rf frontend/node_modules
 
 #cree et demarre les container
 up:
