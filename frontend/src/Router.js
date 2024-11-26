@@ -1,12 +1,15 @@
 import DefaultView from "./views/ErrorView.js";
 
-
-export default class{
-
+class Router {
+	static _instance;
 	#routes = [];
 	#currentView = null;
 
 	constructor(){
+		if (Router._instance) {
+			throw new Error("Router Singleton classes can't be instantiated more than once.")
+		  }
+		  Router._instance = this;
 		this.addRoute.bind(this);
 		this._matchRoute.bind(this);
 	}
@@ -76,7 +79,7 @@ export default class{
 		newroute.regex = new RegExp(strregex); // regex permettant de matcher l'uri et le schema
 		this.#routes.push(newroute);
 	}
-
+	//match the url with the route and return the matched one or null
 	_matchRoute(url){
 		for (const route of this.#routes){
 			const url_split = url.split(/\//).filter((str)=> str.length > 0);
@@ -103,3 +106,5 @@ export default class{
 	}
 
 }
+
+export {Router as default}
