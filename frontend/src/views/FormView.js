@@ -1,38 +1,36 @@
 import AbstractView from "./AbstractView.js";
 
 class FormView extends AbstractView {
-	constructor(params){
-		super(params);
-		this._setTitle("test boostrap View");
-		this.onStart();
-	}
+  constructor(params) {
+    super(params);
+    this._setTitle("test boostrap View");
+    this.onStart();
+  }
 
-	onStart(){
+  onStart() {
+    this.setHtml();
+    const switch_button = document.querySelector(".toggle-theme");
+    this.addEventListener(switch_button, "click", this.toggleMode);
+    // switch_button.addEventListener('click', this.toggleMode);
+  }
 
-		this.setHtml();
-		const switch_button = document.querySelector('.toggle-theme');
-		this.addEventListener(switch_button, "click", this.toggleMode);
-		// switch_button.addEventListener('click', this.toggleMode);
-	}
+  toggleMode(e) {
+    e.stopPropagation();
+    if (document.documentElement.getAttribute("data-bs-theme") == "dark") {
+      document.documentElement.setAttribute("data-bs-theme", "light");
+    } else {
+      document.documentElement.setAttribute("data-bs-theme", "dark");
+    }
+  }
 
-	toggleMode(e){
-		e.stopPropagation();
-		if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-			document.documentElement.setAttribute('data-bs-theme','light')
-		}
-		else {
-			document.documentElement.setAttribute('data-bs-theme','dark')
-		}
-	}
-
-	setHtml(){
-		let pm = '';
-		const container = document.querySelector(".container");
-		for (const key in this.params){
-			pm += String(key) + " : " + this.params[key] + "<br>";
-		}
-		if (container){
-			container.innerHTML = `
+  setHtml() {
+    let pm = "";
+    const container = document.querySelector(".container");
+    for (const key in this.params) {
+      pm += String(key) + " : " + this.params[key] + "<br>";
+    }
+    if (container) {
+      container.innerHTML = `
 <h1>Welcome to the Form view</h1>
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">@</span>
@@ -72,8 +70,8 @@ class FormView extends AbstractView {
 
 <button type="button" class="toggle-theme btn btn-secondary">switch color theme</button>
 `;
-		}
-	}
+    }
+  }
 }
 
 export default FormView;
